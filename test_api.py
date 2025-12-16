@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from todo_app.app.database import Base, get_db
-from todo_app.api import app
+from todo_app.app.api import app
 
 engine = create_engine("sqlite:///todo_app/data/test_todo.db")
 TestingSessionLocal = sessionmaker(bind=engine)

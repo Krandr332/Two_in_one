@@ -6,9 +6,9 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from contextlib import asynccontextmanager
 
-from todo_app.app.database import engine, get_db
-from todo_app.app import models, schemas, crud, auth
-from todo_app.app.config import ENV
+from .database import engine, get_db
+from . import models, schemas, crud, auth
+from .config import ENV
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
