@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  todo-service:
+    image: kraeva/todo-service:latest
+      #build:
+      #context: ./todo_app
+      #dockerfile: Dockerfile
+    container_name: todo-service
+    ports:
+      - "8000:80"
+    volumes:
+      - todo_data:/app/data
+    environment:
+      - DATABASE_URL_TODO=sqlite:////app/data/todo.db
+      - SECRET_KEY=TEST
+      - ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=30
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  shorturl-service:
+    image: kraeva/shorturl-service:latest
+      #build:
+      #context: ./shorturl_app
+      #dockerfile: Dockerfile
+    container_name: shorturl-service
+    ports:
+      - "8001:80"
+    volumes:
+      - shorturl_data:/app/data
+    environment:
+      - DATABASE_URL_SHORT_URL=sqlite:////app/data/shorturl.db
+    restart: unless-stopped
+    networks:
+      - app-network
+
+volumes:
+  todo_data:
+    name: todo_data
+  shorturl_data:
+    name: shorturl_data
+
+networks:
+  app-network:
+    driver: bridge
+
